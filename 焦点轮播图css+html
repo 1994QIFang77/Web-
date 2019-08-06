@@ -1,0 +1,64 @@
+css:
+    	*{ margin: 0; padding: 0; }
+    	img{vertical-align: top;}
+    	ul{list-style: none;}
+        .box{
+        	margin: 100px auto;
+        	width: 730px;
+        	height: 454px;
+        	border: 1px solid red;
+        	position: relative;
+        	overflow: hidden;
+        }
+        .imgli{
+			width: 600%;
+        	position: absolute;
+        	left: 0;
+        	top:0;
+        }
+        .imgli li{
+        	float: left;
+        }
+        .dom{
+        	position: absolute;
+        	width: 170px;
+        	height: 20px;
+        	color: black;
+        	bottom: 20px;
+        	left:50%;
+        	margin-left:-85px;
+        	text-align: center;
+        	line-height: 20px;
+        }
+        .dom li{
+        	display: inline-block;
+        	width: 22px;
+			background-color: white;
+			border-radius: 50%;
+			cursor: pointer;
+        }
+        .dom .hover{
+			background-color: red;
+        }
+
+html:
+<div class="box" id="scroll">
+    <ul class="imgli">
+        <li ><img src="images/11.jpg" alt=""/></li>
+        <li><img src="images/22.jpg" alt=""/></li>
+        <li><img src="images/33.jpg" alt=""/></li>
+        <li><img src="images/44.jpg" alt=""/></li>
+        <li><img src="images/55.jpg" alt=""/></li>
+        <li><img src="images/66.jpg" alt=""/></li>
+    </ul>
+    <ul class="dom">
+    	<li class="hover">1</li>
+    	<li>2</li>
+    	<li>3</li>
+    	<li>4</li>
+    	<li>5</li>
+    	<li>6</li>
+    </ul>
+</div>
+
+</html>
