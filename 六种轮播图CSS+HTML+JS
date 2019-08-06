@@ -1,0 +1,256 @@
+第1，2和第3种需要鼠标经过，或者鼠标点击，不自动轮播。
+第4种：无缝轮播（循环轮播），无需鼠标点击，自动。
+
+第1种和第2种的css+html：
+css：
+<style>
+    	*{ margin: 0; padding: 0; }
+    	img{vertical-align: top;}
+    	ul{list-style: none;}
+        .box{
+        	margin: 100px auto;
+        	width: 730px;
+        	height: 454px;
+        	border: 1px solid red;
+        	position: relative;
+        	overflow: hidden;
+        }
+        .imgli{
+			width: 600%;
+        	position: absolute;
+        	left: 0;
+        	top:0;
+        }
+        .imgli li{
+        	float: left;
+        }
+        .dom{
+        	position: absolute;
+        	width: 170px;
+        	height: 20px;
+        	color: black;
+        	bottom: 20px;
+        	left:50%;
+        	margin-left:-85px;
+        	text-align: center;
+        	line-height: 20px;
+        }
+        .dom li{
+        	display: inline-block;
+        	width: 22px;
+			background-color: white;
+			border-radius: 50%;
+			cursor: pointer;
+        }
+        .dom .hover{
+			background-color: red;
+        }
+</style>
+html：
+div class="box" id="scroll">
+    <ul class="imgli">
+        <li ><img src="images/11.jpg" alt=""/></li>
+        <li><img src="images/22.jpg" alt=""/></li>
+        <li><img src="images/33.jpg" alt=""/></li>
+        <li><img src="images/44.jpg" alt=""/></li>
+        <li><img src="images/55.jpg" alt=""/></li>
+        <li><img src="images/66.jpg" alt=""/></li>
+    </ul>
+    <ul class="dom">
+    	<li class="hover">1</li>
+    	<li>2</li>
+    	<li>3</li>
+    	<li>4</li>
+    	<li>5</li>
+    	<li>6</li>
+    </ul>
+</div>
+
+js：
+1. 无动画效果
+
+<script>
+var box = document.getElementById("scroll");
+	var boximg = box.children[0];
+	var lis = box.children[1].children;
+	for(var i=0;i<lis.length;i++)
+	{
+		lis[i].index = i;
+		lis[i].onmouseover = function(){
+			for(var j=0;j<lis.length;j++)
+			{
+				lis[j].className="";
+			}
+			this.className = 'hover';
+			boximg.style.left = -this.index*730 + 'px';
+		}
+	}
+ </script>
+ 
+ 2.缓动动画效果(越来越慢)
+  <script>
+	var box = document.getElementById("scroll");
+	var boximg = box.children[0];
+	var lis = box.children[1].children;
+	var leader = 0,target = 0;
+	for(var i=0;i<lis.length;i++)
+	{
+		lis[i].index = i;
+		lis[i].onmouseover = function(){
+			for(var j=0;j<lis.length;j++)
+			{
+				lis[j].className="";
+			}
+			this.className = 'hover';
+			target = -this.index*730;
+		}
+	}
+	setInterval(function(){
+		leader = leader + (target - leader) / 10;
+		boximg.style.left = leader + "px";
+	},30);
+</script>
+
+3. 左右焦点轮播图
+css：
+*{ margin: 0; padding: 0; }
+    	img{vertical-align: top;}
+    	ul{list-style: none;}
+        .box{
+        	margin: 100px auto;
+        	width: 730px;
+        	height: 454px;
+        	border: 1px solid red;
+        	position: relative;
+        	overflow: hidden;
+        }
+        .imgli{
+			width: 600%;
+        	position: absolute;
+        	left: 0;
+        	top:0;
+        }
+        .imgli li{
+        	float: left;
+        }
+        .box div{
+            display: none;
+        }
+        .box div .left,
+        .box div .right{
+            display: inline-block;
+            width: 50px;
+            height:70px;
+            line-height: 70px;
+            opacity: 0.4;
+            background-color: #ddd;
+            color: white;
+            top:50%;
+            position: absolute;
+            margin-top: -35px;
+            font-size:40px;
+            text-align: center;
+            border: 1px solid white;
+            cursor: pointer;
+        }
+        .box div .right{
+            right: 0;
+        }
+        
+html：
+div class="box" id="scroll">
+    <ul class="imgli">
+        <li ><img src="images/11.jpg" alt=""/></li>
+        <li><img src="images/22.jpg" alt=""/></li>
+        <li><img src="images/33.jpg" alt=""/></li>
+        <li><img src="images/44.jpg" alt=""/></li>
+        <li><img src="images/55.jpg" alt=""/></li>
+        <li><img src="images/66.jpg" alt=""/></li>
+    </ul>
+    <div>
+    <span class="left"><</span><span class="right">></span>
+    </div>
+</div>
+
+js：
+<script>
+	var box = document.getElementById("scroll");
+    var imgli = box.children[0];
+    var spanlr = box.children[1];
+    var left = spanlr.children[0];
+    var right = spanlr.children[1];
+    box.onmouseover = function(){
+        spanlr.style.display = "block";
+    }
+    box.onmouseout = function(){
+        spanlr.style.display = "none";
+    }
+    left.onclick = function(){
+        target -= 730;
+    }
+    right.onclick = function(){
+        target += 730;
+    }
+    var leader = 0,target = 0;
+    setInterval(function(){
+        if(target>=0) target=0;
+        if(target<=-3650) target=-3650;
+        leader = leader + (target - leader) / 10;
+        imgli.style.left = leader + "px";
+    },20);
+</script>
+
+第四种：无缝轮播（循环），自动
+css：
+  <style>
+    	*{ margin: 0; padding: 0; }
+    	img{vertical-align: top;}
+    	ul{list-style: none;}
+        .box{
+        	margin: 100px auto;
+        	width: 730px;
+        	height: 454px;
+        	border: 1px solid red;
+        	position: relative;
+        	overflow: hidden;
+        }
+        .imgli{
+			width: 600%;
+        	position: absolute;
+        	left: 0;
+        	top:0;
+        }
+        .imgli li{
+        	float: left;
+        }
+ </style>
+html：
+<div class="box" id="scroll">
+    <ul class="imgli">
+        <li ><img src="images/11.jpg" alt=""/></li>
+        <li><img src="images/22.jpg" alt=""/></li>
+        <li><img src="images/33.jpg" alt=""/></li>
+        <li><img src="images/44.jpg" alt=""/></li>
+        <li ><img src="images/11.jpg" alt=""/></li>
+        <li><img src="images/22.jpg" alt=""/></li>
+    </ul>
+</div>
+js：
+<script>
+	var box = document.getElementById("scroll");
+    var imgli = box.children[0];
+    var timer = null;
+    timer = setInterval(auto,40);
+    var num=0;
+    function auto(){
+        num-=10;
+        num<=-2920? num=0:num; 
+        imgli.style.left = num+"px";
+    }
+    box.onmouseover = function(){
+        clearInterval(timer);
+    }
+    box.onmouseout = function(){
+       timer = setInterval(auto,40);
+    }
+</script>
