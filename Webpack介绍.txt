@@ -5,7 +5,7 @@ Webpack: 用于静态模块的打包工具。
 Webpack支持CommonJS、AMDJS、ES6三种规范化。
 
 CommonJS：同步定义的模块化，同步加载模块，每个模块都是一个独立的作用域。只有加载完，才能执行后面的操作。语法少。
-          模块输出：modules.exports。模块引入：rquire()
+          模块输出：module.exports。模块引入：require()
 
 AMDJS:    非同步加载模块化（异步定义），不会有阻塞，允许指定回调函数。
           requireJS实现AMDJS规范，requireJS定义了一个函数define，是全局变量，用来定义模块
@@ -48,37 +48,38 @@ module.exports = {
     },
     output:{
       //输出，目标文件，打包输出目标，
-      path :‘/dist’；//目标文件存放的路径
-      filename: [name].js//目标文件名
+      path :‘/dist’；      //目标文件存放的路径
+      filename: [name].js //目标文件名
     },
     module:{
       loaders:[
-        {test://正则,loader：}//webpack的loader的配置是从右往左的
+        {
+            test:/\.css$/,                        //正则，处理css文件
+            loader："style-loader!css-loader"      //webpack的loader的配置是从右往左的
+        }
           ...
          //一些常用的loader有：css-loader、style-loader、html-loader、file-loader、url-loader、babel-loader
          //babel是语义转换器，能将ES6、ES7转换为浏览器所能识别的js文件。直接转换，会很耗时，可以通过exclude排除或者include选定文件加载，来优化。
       ]
     },
-    plugins:[
-        //插件 
-        new //new一个插件
+    plugins:[                 //插件
+        new         //new一个插件
         例如：
-        //独立 通用模块
-        new webpack.optimize.CommonsChunkPlugin({//公共的js，打包到/dist/js/base.js
+        new webpack.optimize.CommonsChunkPlugin({           //独立 通用模块   公共的js，打包到/dist/js/base.js
               name: 'common',
-              filename: 'js/base.js'//所有输出的filename都基于path，放在path下面
+              filename: 'js/base.js'                        //所有输出的filename都基于path，放在path下面
         }),
-        new ExtractTextPlugin("css/[name].css"),//把CSS单独打包到文件里
-        new HtmlWebpackPlugin( {//html模板的处理
-          template: './src/view/index.html',//html原始的模板
-          filename: 'view/index.html',//目标文件的位置（打包存放位置）
-          inject: true,//html文件中嵌入的script放置的位置 将JS 文件注入的位置
+        new ExtractTextPlugin("css/[name].css"),            //把CSS单独打包到文件里
+        new HtmlWebpackPlugin( {                            //html模板的处理
+          template: './src/view/index.html',                //html原始的模板
+          filename: 'view/index.html',                      //目标文件的位置（打包存放位置）
+          inject: true,                                     //html文件中嵌入的script放置的位置 将JS 文件注入的位置
           hash: true,
-          chunks: ['common',index]//设定只引入html需要的js，就是本页面引入的js块（这里是只引入公共逻辑模块和本身文件逻辑模块）
+          chunks: ['common',index]                 //设定只引入html需要的js，就是本页面引入的js块（这里是只引入公共逻辑模块和本身文件逻辑模块）
           //excludeChunks[] 排除用不上的chunks
       };)
     ],
-    externals:{//外部依赖的声明
+    externals:{                         //外部依赖的声明
      'jquery':'window.jQuery'
     }
 };
@@ -87,3 +88,6 @@ webpack打包过程：
     把项目当做一个整体，执行webpack命令后，会从webpack.config.js中的entry参数中找到打包入口的主文件（一个或者多个），
     然后webpack将会从主文件开始找到项目中所有依赖的文件，使用loader去处理这些文件，
     最后将这些文件打包成一个或多（由output设定）个浏览器所能识别的JS文件。
+    
+    
+    
