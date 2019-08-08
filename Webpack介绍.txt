@@ -35,6 +35,8 @@ webpack --watch ：监听文件的改变，自动编译，不能自动刷新浏�
 webpack-dev-server:前端开发服务器，需要npm安装。监听文件的改变，自动刷新浏览器。
 
 Webpack的配置都在webpack.config.js这个文件里面，当执行webpack打包命令的时候，会从这个文件开始
+
+
 webpack.config.fig文件内部基本框架（CommonJS）：
 
 var webpack = require('webpack');//用于访问内置插件（组件）：CommonsChunkPlugin
@@ -83,6 +85,8 @@ module.exports = {
      'jquery':'window.jQuery'
     }
 };
+
+具体wepack的webpack.config.js配置，见文件webpack.config.js（一个完整的电商向前前端的框架配置）
 
 webpack打包过程：
     把项目当做一个整体，执行webpack命令后，会从webpack.config.js中的entry参数中找到打包入口的主文件（一个或者多个），
