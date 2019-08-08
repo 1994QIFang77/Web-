@@ -1,3 +1,5 @@
+
+
 Webpack: 用于静态模块的打包工具。
 
 Webpack支持CommonJS、AMDJS、ES6三种规范化。
@@ -39,7 +41,7 @@ var webpack = require('webpack');//用于访问内置插件（组件）：Common
 var ExtractTextPlugin = require("extract-text-webpack-plugin");//用于单独打包css
 var HtmlWebpackPlugin = require("html-webpack-plugin");//用于单独打包html
 
-modules.exports = {
+module.exports = {
     entry:{
        //打包入口，用来设置打包从哪个文件开始，可以为单个，多个
        //要设置多页面时，需要使用对象的方式
